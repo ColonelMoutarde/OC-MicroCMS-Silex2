@@ -81,10 +81,11 @@ class CommentDAO extends DAO
         $sql = "select * from t_comment where com_id=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
 
-        if ($row)
+        if ($row){
             return $this->buildDomainObject($row);
-        else
+        } else {
             throw new \Exception("No comment matching id " . $id);
+        }
     }
 
     /**
@@ -146,9 +147,9 @@ class CommentDAO extends DAO
      * @return \MicroCMS\Domain\Comment
      */
     protected function buildDomainObject(array $row) {
-        $comment = new Comment();
-        $comment->setId($row['com_id']);
-        $comment->setContent($row['com_content']);
+        $comment = (new Comment())
+            ->setId($row['com_id'])
+            ->setContent($row['com_content']);
 
         if (array_key_exists('art_id', $row)) {
             // Find and set the associated article
