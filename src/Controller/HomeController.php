@@ -31,10 +31,10 @@ class HomeController {
         $commentFormView = null;
         if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
             // A user is fully authenticated : he can add comments
-            $comment = new Comment();
-            $comment->setArticle($article);
             $user = $app['user'];
-            $comment->setAuthor($user);
+            $comment = (new Comment())
+                ->setArticle($article)
+                ->setAuthor($user);
             $commentForm = $app['form.factory']->create(CommentType::class, $comment);
             $commentForm->handleRequest($request);
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
