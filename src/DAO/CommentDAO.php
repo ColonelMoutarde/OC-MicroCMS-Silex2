@@ -81,10 +81,11 @@ class CommentDAO extends DAO
         $sql = "select * from t_comment where com_id=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
 
-        if ($row)
+        if ($row){
             return $this->buildDomainObject($row);
-        else
+        } else {
             throw new \Exception("No comment matching id " . $id);
+        }
     }
 
     /**
